@@ -1,5 +1,24 @@
+// Validation stock symbol array for all availalbe stock symbols in iexTrading 
+const validationList = [];
+
+
+ // Creating an AJAX call for all stock symbol data to be stored in array 
+ $.ajax({
+    url: `https://api.iextrading.com/1.0/ref-data/symbols?`,
+    method: 'GET'
+  }).then(function(response) {
+
+    for (let i = 0; i < response.length; i++) {
+    stockSymbol = response[i].symbol;
+    validationList.push(stockSymbol);
+    // console.log(validationList);
+    };
+
+});
+
+
 // Initial array of stocks
-const stocksList = ['FB', 'AAPL', 'GE', 'GOOG', `AMZN`];
+const stocksList = ['FB', 'AAPL', 'GE', `AMZN`, `IBM`, `CSCO`, `KO`, `SBUX`, `UPS`, `HOG`];
 
 
 // displaystockInfo function re-renders the HTML to display the appropriate content
@@ -7,7 +26,7 @@ const displayStockInfo = function () {
 
   // Grab the stock symbol from the button clicked and add it to the queryURL
   const stock = $(this).attr('data-name');
-  const queryURL = `https://api.iextrading.com/1.0/stock/${stock}/batch?types=quote,news&range=1m&last=1`;
+  const queryURL = `https://api.iextrading.com/1.0/stock/${stock}/batch?types=quote,Logo,news&range=1m&last=1`;
 
   // Creating an AJAX call for the specific stock button being clicked
   $.ajax({
@@ -27,14 +46,24 @@ const displayStockInfo = function () {
     // Appending the name to our stockDiv
     stockDiv.append(nameHolder);
 
-    // Storing the stock symbol
-    const stockSymbol = response.quote.symbol;
+    // Storing the company logo
+    const stockLogo = response.Logo.url;
 
-    // Creating an element to display the stock symbol
-    const symbolHolder = $('<p>').text(`Stock Symbol: ${stockSymbol}`);
+    // Creating an element to display the logo
+    var logoHolder = $('<img />').attr({
+        'id': companyName,
+        'src': stockLogo,
+        'alt': 'Company logo',
+        'width': 25   
+    });
 
-    // Appending the symbol to our stockDiv
-    stockDiv.append(symbolHolder);
+     // const logoHolder = $('<img />').attr(`"src" + "${stockLogo}"`);
+    // <img src="https://storage.googleapis.com/iex/api/logos/GE.png" height="25px" width="25px" alt="Company Logo">
+    // https://www.encodedna.com/jquery/dynamically-add-image-to-div-using-jquery-append-method.htm
+
+
+    // Appending the logo to our stockDiv
+    stockDiv.append(logoHolder);
 
     // Storing the price
     const stockPrice = response.quote.latestPrice;
@@ -56,12 +85,12 @@ const displayStockInfo = function () {
 
     // Finally adding the stockDiv to the DOM
     // Until this point nothing is actually displayed on our page
-    $('#stocks-view').prepend(stockDiv);
+    $('#stocks-view').append(stockDiv);
   });
 
 }
 
-// Function for displaying stock data
+// Function for displaying stock data buttons
 const render = function () {
 
   // Deleting the stocks prior to adding new stocks
@@ -77,13 +106,20 @@ const render = function () {
     
     // Adding a class of stock-btn to our button
     newButton.addClass('stock-btn');
+    newButton.addClass('btn-sm');
+    // newButton.addClass('btn-primary');
     
     // Adding a data-attribute
     newButton.attr('data-name', stocksList[i]);
-    
+
+      
     // Providing the initial button text
     newButton.text(stocksList[i]);
     
+
+            // add some validation to prevent duplicate buttons??
+
+
     // Adding the button to the buttons-view div
     $('#buttons-view').append(newButton);
   }
@@ -96,11 +132,28 @@ const addButton = function(event) {
   // We're using a form so that the user can hit enter instead of clicking the button if they want
   event.preventDefault();
 
-  // This line will grab the text from the input box
-  const stock = $('#stock-input').val().trim();
-  
+  // This line will grab the text from the input box, trim off any spaces and convert the string to uppercase letters
+  const stock = $('#stock-input').val().trim().toUpperCase();
+  let inList=false;
+
+    // validating submitted stock sybmol is in the iexTrading list
+     for (let i = 0; i < validationList.length; i++) {
+        if (stock === validationList [i]) {
+               
+        // The stock from user input is valid...add to array
+        stocksList.push(stock);
+        inList=true;
+        }
+    }
+     // The stock from user input is not valid...alert user
+     if (inList == false) {
+        alert (stock + " is not a valid stock symbol!");
+    }
+
+
+
   // The stock from the textbox is then added to our array
-  stocksList.push(stock);
+//   stocksList.push(stock);
 
   // Deletes the contents of the input
   $('#stock-input').val('');
@@ -117,3 +170,20 @@ $('#buttons-view').on('click', '.stock-btn', displayStockInfo);
 
 // Calling the renderButtons function to display the intial buttons
 render();
+
+
+
+
+
+
+
+
+
+
+// 4. Add a form to your page that takes the value from a user input box and adds it into your `stocksList` 
+// array only if the input exists in our `validationList`. Hint: You'll want to make sure the user input 
+// is always capitalized. Then make a function call that takes each topic in the array remakes 
+// the buttons on the page.
+
+
+
