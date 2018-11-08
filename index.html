@@ -9,7 +9,8 @@
     <!-- Bootstrap CSS CDN  -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
     <!-- Font Awesome CSS Icons -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+        crossorigin="anonymous">
     <!-- Link  html to CSS Style Page -->
     <link rel="stylesheet" href="../Stock-Search/assets/css/style.css" />
 </head>
@@ -17,54 +18,142 @@
 <body>
     <div class="container">
 
-        <!-- Jumbotron for Title -->
+        <!-- Jumbotron for Page Title -->
         <div class="jumbotron">
             <h1 class="text-center">
-              <strong>
-                <i class="fas fa-chart-line"></i> Maket Analysis</strong>
+                <strong>
+                    <i class="fas fa-chart-line"></i> Maket Analysis</strong>
             </h1>
         </div>
-        
 
-        <!-- Rendered stocky symbol buttons here  -->
+
+        <!-- Rendered stock symbol buttons go here  -->
         <div class="row">
-                <div class="col-sm-12">
+            <div class="col-sm-12">
                 <br>
                 <div class="btn-toolbar">
-                <div id="buttons-view"></div>
+                    <div id="buttons-view"></div>
                 </div>
             </div>
         </div>
-        
-         <!-- Row for Searching iexTrading -->
+
+        <!-- Row for Searching iexTrading -->
         <div class="row">
             <div class="col-sm-12">
-            <br>
-              <!-- First card is for handling the search parameters -->
-              <div class="card">
-                <div class="card-header">
-                  <strong>
-                    <i class="fa fa-list-alt"></i> Search Parameters</strong>
+                <br>
+                <!-- First card is for handling the search parameters -->
+                <div class="card">
+                    <div class="card-header">
+                        <strong>
+                            <i class="fa fa-list-alt"></i> Stock Watch</strong>
+                    </div>
+
+                    <div class="card-body">
+
+                        <!-- <h3>Stock Watch</h3> -->
+
+                        <form id="stock-form">
+                            <label for="stock-input">Add a Stock Symbol</label>
+                            <input type="text" id="stock-input">
+                            
+
+                            <!-- Button triggers new stock to be added -->
+                            <input id="add-stock" type="submit" value="submit">
+                        </form>
+                        <br>
+                        <!-- Here we capture the number of records that the user wants to retrieve  -->
+                        <div class="form-group">
+                                <label for="pwd">Number of News Articles to Retrieve:</label>
+                                <select id="article-count" class="custom-select" aria-labelledby="dropdownMenuButton">
+                                <option selected value="1">1</option>
+                                <!-- Setting the option for 5 as default -->
+                                <option value="5" selected>5</option>
+                                <option value="10">10</option>
+                                </select>
+                        </div>
+
+
+                    </div>
+                </div>
             </div>
-        <div class="card-body">
+        </div>
+
+<!-- Use below to build out the search box -->
+<!-- 
+        <div class="row">
+                <div class="col-sm-12">
+                  <br> -->
+                  <!-- First card is for handling the search parameters -->
+                  <!-- <div class="card">
+                    <div class="card-header">
+                      <strong>
+                        <i class="fa fa-list-alt"></i> Search Parameters</strong>
+                    </div>
+                    <div class="card-body"> -->
+          
+                      <!-- Here we create an HTML Form for handling the inputs-->
+                      <!-- <form role="form"> -->
+          
+                                 
+                        <!-- Here we capture the number of records that the user wants to retrieve  -->
+                        <!-- <div class="form-group">
+                          <label for="pwd">Number of Records to Retrieve:</label>
+                          <select id="article-count" class="custom-select" aria-labelledby="dropdownMenuButton">
+                            <option selected value="1">1</option>
+                            <!-- Setting the option for 5 as default -->
+                            <!-- <option value="5" selected>5</option>
+                            <option value="10">10</option>
+                          </select>
+                        </div> -->
+         
+                        <!-- Here we have our final submit button -->
+                        <!-- <button type="submit" class="btn btn-default" id="run-search">
+                          <i class="fa fa-search"></i> Search</button>
+                        <button class="btn btn-default" id="clear-all">
+                          <i class="fa fa-trash"></i> Clear Results</button>
+          
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
 
 
-        <h1>Stock Watch</h1>
-    
+<!-- Use above to build out the search box -->
 
-        <!-- Company stock information is created Here -->
-        <div id="stocks-view"></div>
-        
-    
-    
-        <form id="stock-form">
-          <label for="stock-input">Add a Stock Symbol</label>
-          <input type="text" id="stock-input">
-          <br>
-    
-          <!-- Button triggers new stock to be added -->
-          <input id="add-stock" type="submit" value="Add a Stock Symbol">
-        </form>
+
+
+
+        <!-- This row will handle all of the retrieved articles -->
+        <div class="row">
+            <div class="col-sm-12">
+                <br>
+
+                <!-- This card will initially be made up of a card and wells for each of the articles retrieved -->
+                <div class="card">
+
+                    <!-- card Heading for the retrieved articles box -->
+                    <div class="card-header">
+                        <strong>
+                            <i class="fa fa-table"></i> Company Profile</strong>
+                    </div>
+
+                    <!-- This main card will hold each of the resulting articles -->
+                    <div class="card-body" id="article-section">
+
+                        <!-- Company stock information is created Here -->
+                        <div id="stocks-view"></div>
+                        
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>

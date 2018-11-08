@@ -85,9 +85,10 @@ const displayStockInfo = function () {
 
     // Finally adding the stockDiv to the DOM
     // Until this point nothing is actually displayed on our page
-    $('#stocks-view').append(stockDiv);
+    $('#stocks-view').html("");
+    $('#stocks-view').prepend(stockDiv);
+    
   });
-
 }
 
 // Function for displaying stock data buttons
