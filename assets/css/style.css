@@ -17,6 +17,7 @@ body {
     margin-bottom: 0px;
     margin-top: 10px;
     padding-top: 35px; 
+   
 }
 
 /* Styling for the Company Profile and News Card */
@@ -39,3 +40,10 @@ img {
 
 }
 
+
+/* Sized for screens up to 450 pxels. */
+@media screen and (max-width: 450px) {
+    h1 {
+        font-size: 2.0rem;
+    }
+}
