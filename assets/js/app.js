@@ -28,7 +28,7 @@ const displayStockInfo = function () {
   const stock = $(this).attr('data-name');
   // Grab the number of News Articles to display from the uers input 
   const numArticles = $('#article-count').val();
-  const queryURL = `https://api.iextrading.com/1.0/stock/${stock}/batch?types=quote,Logo,news&range=1m&last=${numArticles}`;
+  const queryURL = `https://api.iextrading.com/1.0/stock/${stock}/batch?types=quote,Logo,news&range=last=${numArticles}`;
 
   // Creating an AJAX call for the specific stock button being clicked
   $.ajax({
