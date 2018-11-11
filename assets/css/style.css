@@ -1,18 +1,17 @@
+/* Main webpage body styling, including background */
 body {
 	background-color: whitesmoke;
 	font-family:'Arial', 'Helvetica Neue', Helvetica, sans-serif;
     margin: 0;
     line-height: 1.5;
-	/* background-image: url("https://www.wallpapersin4k.org/wp-content/uploads/2017/04/Stock-Market-Wallpaper-9.jpg"); */
-	
+	background-image: url("http://www.designbolts.com/wp-content/uploads/2012/12/Noise-lines-White-Tileable-pattern-for-website-background.jpg");
 }
 
-
+/* Styling for header box */
 .jumbotron {
     height: 125px;
     background-color: #20315A; 
     background-image: url(https://www.varchev.com/wp-content/uploads/2017/01/stock-market_549386-512x288.jpg);
-    /* background-image: url(http://hdwallpaperg.com/wp-content/uploads/2014/10/free-stock-market-simulator.jpg); */
     background-size: cover;
     color: white;
     margin-bottom: 0px;
@@ -20,6 +19,7 @@ body {
     padding-top: 35px; 
 }
 
+/* Styling for the Company Profile and News Card */
 .card-header{
     background-color: #192c63;
     color: white;
