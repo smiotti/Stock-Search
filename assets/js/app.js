@@ -46,7 +46,7 @@ const displayStockInfo = function () {
     const companyName = response.quote.companyName;
 
     // Creating an element to display the company name
-    const nameHolder = $('<h5>').text(`Company Name: ${companyName}`);
+    const nameHolder = $('<h5>').text(`${companyName}`);
     
     // Appending the name to our stockDiv
     stockDiv.append(nameHolder);
