@@ -18,7 +18,7 @@ const validationList = [];
 
 
 // Initial array of stocks
-const stocksList = ['FB', 'AAPL', 'GE', `AMZN`, `IBM`, `CSCO`, `KO`, `SBUX`, `UPS`, `HOG`];
+const stocksList = ['FB', 'AAPL', 'GE', `AMZN`, `IBM`, `CSCO`, `KO`, `SBUX`, `UPS`, `TR`, `HOG`];
 
 
 // displaystockInfo function re-renders the HTML to display the appropriate content
