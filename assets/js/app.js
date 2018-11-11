@@ -26,13 +26,18 @@ const displayStockInfo = function () {
 
   // Grab the stock symbol from the button clicked and add it to the queryURL
   const stock = $(this).attr('data-name');
-  const queryURL = `https://api.iextrading.com/1.0/stock/${stock}/batch?types=quote,Logo,news&range=1m&last=1`;
+  // Grab the number of News Articles to display from the uers input 
+  const numArticles = $('#article-count').val();
+  const queryURL = `https://api.iextrading.com/1.0/stock/${stock}/batch?types=quote,Logo,news&range=1m&last=${numArticles}`;
 
   // Creating an AJAX call for the specific stock button being clicked
   $.ajax({
     url: queryURL,
     method: 'GET'
   }).then(function(response) {
+
+
+    for (let i = 0; i < numArticles; i++) {
 
     // Creating a div to hold the stock
     const stockDiv = $('<div>').addClass('stock');
@@ -41,8 +46,8 @@ const displayStockInfo = function () {
     const companyName = response.quote.companyName;
 
     // Creating an element to display the company name
-    const nameHolder = $('<p>').text(`Company Name: ${companyName}`);
-
+    const nameHolder = $('<h5>').text(`Company Name: ${companyName}`);
+    
     // Appending the name to our stockDiv
     stockDiv.append(nameHolder);
 
@@ -57,39 +62,95 @@ const displayStockInfo = function () {
         'width': 25   
     });
 
-     // const logoHolder = $('<img />').attr(`"src" + "${stockLogo}"`);
-    // <img src="https://storage.googleapis.com/iex/api/logos/GE.png" height="25px" width="25px" alt="Company Logo">
-    // https://www.encodedna.com/jquery/dynamically-add-image-to-div-using-jquery-append-method.htm
-
 
     // Appending the logo to our stockDiv
     stockDiv.append(logoHolder);
 
     // Storing the price
     const stockPrice = response.quote.latestPrice;
-
+   
     // Creating an element to display the price
     const priceHolder = $('<p>').text(`Stock Price: $${stockPrice}`);
 
     // Appending the price to our stockDiv
     stockDiv.append(priceHolder);
 
-    // Storing the first news summary
-    const companyNews = response.news[0].summary;
 
-    // Creating an element to display the news summary
-    const summaryHolder = $('<p>').text(`News Headline: ${companyNews}`);
+    // Appending the news article Headline and associate url to stockDiv if it exists
+     if (response.news[i].headline) {
+      const companyNewsHeadline = response.news[i].headline;
+      console.log(companyNewsHeadline);
+      // Creating an element to display the news Headline
+      const summaryHolder = $('<a>').text(`News Headline: ${companyNewsHeadline}`);
+      summaryHolder.attr('href', response.news[i].url)
+      summaryHolder.attr('target', '_blank');
 
-    // Appending the summary to our stockDiv
-    stockDiv.append(summaryHolder);
+      // Appending the Headline to our stockDiv
+      stockDiv.append(summaryHolder);
+    }
 
-    // Finally adding the stockDiv to the DOM
-    // Until this point nothing is actually displayed on our page
-    $('#stocks-view').html("");
+
+
+    // Storing the news Source if it exists
+    const companyNewsSource = response.news[i].source;
+
+    if (companyNewsSource) {
+      console.log(companyNewsSource);
+      // Creating an element to display the news Source
+      const sourceHolder = $('<p>').text(`News Source: ${companyNewsSource}`);
+      // Appending the Source to our stockDiv
+      stockDiv.append(sourceHolder);
+    }
+
+
+    // Add published date, and append to document if exists
+    const companyNewsDate = response.news[i].datetime;
+
+    if (companyNewsDate) {
+      stockDiv.append($('<p>').text('Article Date: ' + formatDate(response.news[i].datetime)));
+      stockDiv.append($('<hr>'));
+    }
+
+   
+
+    // Adding the stockDiv to the DOM
+    // $('#stocks-view').html("");
     $('#stocks-view').prepend(stockDiv);
-    
+
+ 
+    // $('#stocks-view').append(<hr>);
+
+      // $('.content').append(`<hr><p>${employeeList[i].name}</p>`);
+
+  }
   });
 }
+
+
+// FUnction for formatting the Article dates into a more readable format
+const formatDate = function(date) {
+  const months = [
+    'January', 
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December'
+  ];
+
+  // Create a new JavaScript Date object from the passed in date
+  const dateObj = new Date(date);
+
+  // return the date as a string in format 'Month DD, YYYY'
+  return `${months[dateObj.getMonth()]} ${dateObj.getDate()}, ${dateObj.getFullYear()}`
+}
+
 
 // Function for displaying stock data buttons
 const render = function () {
@@ -117,9 +178,6 @@ const render = function () {
     // Providing the initial button text
     newButton.text(stocksList[i]);
     
-
-            // add some validation to prevent duplicate buttons??
-
 
     // Adding the button to the buttons-view div
     $('#buttons-view').append(newButton);
@@ -152,10 +210,6 @@ const addButton = function(event) {
     }
 
 
-
-  // The stock from the textbox is then added to our array
-//   stocksList.push(stock);
-
   // Deletes the contents of the input
   $('#stock-input').val('');
 
@@ -173,18 +227,6 @@ $('#buttons-view').on('click', '.stock-btn', displayStockInfo);
 render();
 
 
-
-
-
-
-
-
-
-
-// 4. Add a form to your page that takes the value from a user input box and adds it into your `stocksList` 
-// array only if the input exists in our `validationList`. Hint: You'll want to make sure the user input 
-// is always capitalized. Then make a function call that takes each topic in the array remakes 
-// the buttons on the page.
 
 
 

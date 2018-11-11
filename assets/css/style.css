@@ -21,9 +21,21 @@ body {
 }
 
 .card-header{
-    background-color: rgb(7, 7, 71);
+    background-color: #192c63;
+    color: white;
 }
 
-/* https://stackoverflow.com/questions/11216645/how-can-i-make-space-between-two-buttons-in-same-div */
+.stock {
+    margin-bottom: 30px;
+}
 
+p {
+  
+    margin-bottom: 2px;
+}
+
+img {
+ padding-bottom: 8px;
+
+}
 
