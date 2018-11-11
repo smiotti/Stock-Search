@@ -90,7 +90,6 @@ const displayStockInfo = function () {
     }
 
 
-
     // Storing the news Source if it exists
     const companyNewsSource = response.news[i].source;
 
@@ -112,15 +111,9 @@ const displayStockInfo = function () {
     }
 
    
-
     // Adding the stockDiv to the DOM
     // $('#stocks-view').html("");
     $('#stocks-view').prepend(stockDiv);
-
- 
-    // $('#stocks-view').append(<hr>);
-
-      // $('.content').append(`<hr><p>${employeeList[i].name}</p>`);
 
   }
   });
@@ -169,7 +162,7 @@ const render = function () {
     // Adding a class of stock-btn to our button
     newButton.addClass('stock-btn');
     newButton.addClass('btn-sm');
-    // newButton.addClass('btn-primary');
+   
     
     // Adding a data-attribute
     newButton.attr('data-name', stocksList[i]);
